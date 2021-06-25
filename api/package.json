@@ -1,0 +1,35 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon -L ./dist/server",
+    "dev:watch": "tsc -w ./src/server --outDir ./dist",
+    "local": "ts-node src/server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "md5": "^2.3.0",
+    "mongodb": "^3.6.9",
+    "mongoose": "^5.12.14",
+    "mongoose-unique-validator": "^2.0.3",
+    "multer": "^1.4.2",
+    "nodemon": "^2.0.7",
+    "npm": "^7.18.1",
+    "swagger-jsdoc": "^6.1.0",
+    "swagger-ui-express": "^4.1.6"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.12",
+    "@types/mongodb": "^3.6.18",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.4"
+  }
+}

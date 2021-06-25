@@ -1,0 +1,470 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Media App API",
+        "description": "This is a simple example NodeJS API project to demonstrate Swagger Documentation",
+        "contact": {
+            "email": "pankajdevesh3@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+        
+    },
+    "securityDefinitions": {
+        "Bearer":{
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    },
+    "schemes": ["http"],
+    "host": "127.0.0.1:5000",
+    "basePath": "/api",
+
+    "security": [
+        {
+            "bearerAuth": []
+        }
+    ],
+    "paths" : {
+
+        
+
+        "/signup": {
+            "post": {
+                "tags": ["Users"],
+                "summary": "Get user profile",
+                "parameters": [
+                    {
+                        "in": "formData",
+                        "name": "first_name",
+                        "description": "First Name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "last_name",
+                        "description": "Last Name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "email",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "avatar",
+                        "description": "Profile Picture",
+                        "required": true,
+                        "type": "file"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "password",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "valid request",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                }
+            }
+        },
+
+        "/login": {
+            "post": {
+                "tags": ["Users"],
+                "summary": "Get user profile",
+                "parameters": [
+                    {
+                        "in": "formData",
+                        "name": "email",
+                        "description": "Email Id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "password",
+                        "description": "Password",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "valid request",
+                        "schema": {
+                            "type":"array",
+                            "items": {
+                                "$ref": "#/definitions/Post"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "invalid request",
+                        "schema": {
+                            "type":"array",
+                            "items": {
+                                "$ref": "#/definitions/Post"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        "/profile": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer" :[]
+                    }
+                ],
+                "tags": ["Users"],
+                "summary": "Get user profile",
+                "responses": {
+                    "200": {
+                        "description": "valid request",
+                        "schema": {
+                            "type":"array",
+                            "items": {
+                                "$ref": "#/definitions/Post"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        
+
+        
+
+
+        "/posts": {
+            "put" : {
+                "tags": ["Posts"],
+                "summary" : "Create Post",
+                "description": "Create new post",
+                "security": [
+                    {
+                        "Bearer" :[]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "formData",
+                        "name": "title",
+                        "description": "Post Title",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "location",
+                        "description": "Location",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "avatar",
+                        "description": "Image",
+                        "required": true,
+                        "type": "file"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/Post"
+                            
+                        }
+                    }
+                    
+                }
+            },
+            "get": {
+                "tags": ["Posts"],
+                "summary": "Get all posts from login user",
+                "security": [
+                    {
+                        "Bearer":[]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "valid request",
+                        "schema": {
+                            "type":"array",
+                            "items": {
+                                "$ref": "#/definitions/Post"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        "/posts/{id}": {
+            "get": {
+                "tags": ["Posts"],
+                "summary": "Get post by id",
+                "security": [
+                    {
+                        "Bearer":[]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Post id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "valid request",
+                        "schema": {
+                            "$ref": "#/definitions/Post"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized access",
+                        "schema": {
+                            "$ref": "#/definitions/InvalidResponse"
+                        }
+                    }
+                }
+            },
+            
+            "patch" : {
+                "tags": ["Posts"],
+                "summary" : "Update Post",
+                "description": "Delete the post",
+                "security": [
+                    {
+                        "Bearer":[]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "post id that needs to be updated",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "title",
+                        "description": "Post Title",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "location",
+                        "description": "Location",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "avatar",
+                        "description": "Image",
+                        "required": false,
+                        "type": "file"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Post"
+                            }
+                        }
+                    }
+                    
+                }
+            },
+            "delete" : {
+                "tags": ["Posts"],
+                "summary" : "Delete post",
+                "description": "Delete the post",
+                "security": [
+                    {
+                        "Bearer":[]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "post id that needs to be deleted",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Post"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/InvalidResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/search": {
+            "get": {
+                "tags": ["Search"],
+                "summary": "Search post by location",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "location",
+                        "description": "Lacation",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "valid request",
+                        "schema": {
+                            "type":"array",
+                            "items": {
+                                "$ref": "#/definitions/Post"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/download/{media}": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer" :[]
+                    }
+                ],
+                "tags": ["Download"],
+                "summary": "Get user profile",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "media",
+                        "description": "Lacation",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "valid request",
+                        "schema": {
+                            "type":"array",
+                            "items": {
+                                "$ref": "#/definitions/Post"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }, 
+    
+    "definitions": {
+
+        "User": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "avatar": {
+                    "type": "string"
+                }
+            }
+        },
+
+        "Post": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                },
+                "media_type": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "location": {
+                    "type": "string"
+                }
+            }
+        },
+        "InvalidResponse": {
+            "type": "object",
+            "properties": {
+                "statusCode": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+
+        }
+    }
+}

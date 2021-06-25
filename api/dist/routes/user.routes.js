@@ -1,0 +1,12 @@
+"use strict";
+exports.__esModule = true;
+var express_1 = require("express");
+var user = require("../controller/user.controller");
+var upload_helper_1 = require("../util/upload-helper");
+var jwt_1 = require("../util/jwt");
+var router = express_1.Router();
+var uploadAvatar = upload_helper_1["default"].single('avatar');
+router.post('/signup', jwt_1["default"].loginRequireMiddleware(), uploadAvatar, user.Signup);
+router.post('/login', user.Login);
+router.get('/profile', jwt_1["default"].loginRequireMiddleware(), user.Profile);
+exports["default"] = router;
